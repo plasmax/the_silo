@@ -49,4 +49,4 @@ Getting started is easy. After you have installed The Silo, all available tools
 will be added to a menu called ``The Silo`` and sub-menus called ``Gizmos`` and
 ``Scripts``. That's it. :)
 
-.. _Full Documentation: http://the_silo.readthedocs.io/en/latest/
+.. _Full Documentation: http://the-silo.readthedocs.io/en/latest/
