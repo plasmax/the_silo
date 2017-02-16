@@ -10,7 +10,7 @@ the_silo
 .. image:: https://img.shields.io/pypi/wheel/the_silo.svg
     :target: https://pypi.python.org/pypi/the_silo
 .. image:: https://readthedocs.org/projects/the_silo/badge/?version=latest
-    :target: https://readthedocs.org/projects/the_silo/?badge=latest
+    :target: https://readthedocs.org/projects/the-silo/?badge=latest
 
 The Silo is a collection of useful tools for Nuke.
 

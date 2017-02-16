@@ -30,6 +30,6 @@ setup(
         'Programming Language :: Python :: 2.7',
         'Programming Language :: Python :: Implementation :: CPython',
     ],
-    install_requires=requirements+test_requirements,
+    install_requires=requirements,
     tests_require=test_requirements
 )
