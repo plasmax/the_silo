@@ -1,0 +1,8 @@
+{
+    "gizmos": [
+        ["Grade layer", "grade_layer"]
+    ],
+    "scripts": [
+        ["Reload all Read nodes", "from the_silo.scripts import reload; reload.all_reads()"]
+    ]
+}
