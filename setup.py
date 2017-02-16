@@ -10,7 +10,7 @@ test_requirements = ['pytest', 'pytest-cov',
 setup(
     name = 'the_silo',
     version = '0.1.0',
-    description='The Silo is a collection of useful tools for Nuke',
+    description='A collection of useful tools for Nuke',
     long_description=readme,
     url='https://github.com/florianeinfalt/the_silo',
     author='Florian Einfalt',
