@@ -38,7 +38,7 @@ Open Nuke's ``menu.py`` file and add:
     import the_silo
 
 Getting Started
-===============
+---------------
 
 There are currently two categories of tools:
 
