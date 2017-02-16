@@ -2,9 +2,9 @@
 version 10.0 v5
 Gizmo {
  inputs 2
- addUserKnob {20 edit_pass l "Edit Pass"}
+ addUserKnob {20 grade_layer l "Grade Layer"}
  addUserKnob {20 endGroup n -1}
- addUserKnob {41 in l Pass T layer_select.in}
+ addUserKnob {41 in l Layer T layer_select.in}
  addUserKnob {41 blackpoint T __GRADE__.blackpoint}
  addUserKnob {41 whitepoint T __GRADE__.whitepoint}
  addUserKnob {41 black l lift T __GRADE__.black}
@@ -43,7 +43,7 @@ Gizmo {
   xpos -6
   ypos 90
  }
-set N32a33dd0 [stack 0]
+set N32630aa0 [stack 0]
  Shuffle {
   in rgb
   alpha black
@@ -52,7 +52,7 @@ set N32a33dd0 [stack 0]
   xpos 180
   ypos 87
  }
-set N32a36370 [stack 0]
+set N326348d0 [stack 0]
  Grade {
   inputs 1+1
   maskChannelMask -rgba.alpha
@@ -60,8 +60,8 @@ set N32a36370 [stack 0]
   xpos 180
   ypos 302
  }
-push $N32a33dd0
-push $N32a36370
+push $N32630aa0
+push $N326348d0
  Merge2 {
   inputs 2
   operation minus
@@ -69,7 +69,7 @@ push $N32a36370
   xpos 70
   ypos 158
  }
-push $N32a33dd0
+push $N32630aa0
  Copy {
   inputs 2
   from0 rgba.red
