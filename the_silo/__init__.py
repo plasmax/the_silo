@@ -6,7 +6,7 @@ import platform
 
 TESTING = False
 try:
-    TESTING = os.environ['DOCS_CONTEXT']
+    TESTING = os.environ['NON_PRODUCTION_CONTEXT']
 except:
     if platform.system() == 'Darwin':
         application = r'Nuke\d+\.\d+v\d+.app'
@@ -25,6 +25,7 @@ __all__ = []
 
 silo_name = 'The Silo'
 silo_location = os.path.dirname(os.path.abspath(__file__))
+
 
 def build_silo():
     nuke.pluginAddPath('{0}/gizmos'.format(silo_location))

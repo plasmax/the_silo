@@ -14,6 +14,7 @@ def run_tests():
     test_env = os.environ.copy()
     env = {
         'PYTHONDONTWRITEBYTECODE': '1',
+        'NON_PRODUCTION_CONTEXT': '1',
         'COVERAGE_FILE': '{0}/.coverage'.format(project_root),
         'NUKE_INTERACTIVE': '1',
         'PATH': '{0}:{1}'.format(NUKE_LOCATION, test_env['PATH']),
@@ -21,9 +22,8 @@ def run_tests():
     }
     for env_var, env_val in env.iteritems():
         test_env[env_var] = env_val
-    subprocess.Popen(['python', project_root+'/run_tests.py',
-                      '--cov=nukecontexts', '--cov-report',
-                      'term-missing'], env=test_env).wait()
+    subprocess.Popen(['python', project_root+'/run_tests.py'],
+                     env=test_env).wait()
 
 
 def run_docs():
@@ -31,7 +31,7 @@ def run_docs():
     docs_env = os.environ.copy()
     env = {
         'PYTHONDONTWRITEBYTECODE': '1',
-        'DOCS_CONTEXT': '1',
+        'NON_PRODUCTION_CONTEXT': '1',
         'PYTHONPATH': '/Users/florian/bin/build/lib/python2.7/site-packages:{0}'.format(project_root)
     }
     for env_var, env_val in env.iteritems():
