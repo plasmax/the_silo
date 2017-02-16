@@ -1,6 +1,6 @@
 {
     "gizmos": [
-        ["Grade layer", "grade_layer"]
+        ["Grade Layer", "grade_layer"]
     ],
     "scripts": [
         ["Reload all Read nodes", "reload", "all_reads"],
