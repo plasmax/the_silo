@@ -3,6 +3,8 @@
         ["Grade layer", "grade_layer"]
     ],
     "scripts": [
-        ["Reload all Read nodes", "from the_silo.scripts import reload; reload.all_reads()"]
+        ["Reload all Read nodes", "reload", "all_reads"],
+        ["Shuffle Multichannel EXR", "multichannel", "shuffle"],
+        ["Create Multichannel EXR", "multichannel", "create"]
     ]
 }
