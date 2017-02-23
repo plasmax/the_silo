@@ -1,40 +1,50 @@
 import os
 import math
 
-def shuffle():
+
+def shuffle(width=4096, height=4096):
     """
     For either selected read nodes in the compositing script, shuffle out all channels contained and create a write node for each channel.
     """
+    exr_data = {
+        'channels': 'rgb',
+        'file_type': 'exr',
+        'datatype': '16 bit half',
+        'compression': 'Zip (1 scanline)',
+        'reading': True
+    }
     import nuke
     for read in nuke.selectedNodes():
         if read.Class() != 'Read':
             continue
-        shuffles = []
+        shuffle_nodes = []
         for layer in nuke.layers(read):
-            shuffle = nuke.nodes.Shuffle(name='shuffle_{0}'.format(layer), inputs=[read])
+            shuffle = nuke.nodes.Shuffle(name='shuffle_{0}'.format(layer),
+                                         inputs=[read])
             shuffle['in'].setValue(layer)
             shuffle['alpha'].setValue('black')
-            shuffles.append(shuffle)
-            write = nuke.nodes.Write(name='write_{0}'.format(layer), inputs=[shuffle])
-            write['channels'].setValue('rgb')
-            write['file'].setValue('{0}.{1}.exr'.format(read['file'].value().replace('.exr', ''), layer))
-            write['file_type'].setValue('exr')
-            write['datatype'].setValue('16 bit half')
-            write['compression'].setValue('Zip (1 scanline)')
-            write['reading'].setValue(True)
-        contact = nuke.nodes.ContactSheet(inputs=shuffles)
-        contact['width'].setValue(4096)
-        contact['height'].setValue(4096)
-        sqrt = math.ceil(math.sqrt(len(shuffles)))
+            shuffle_nodes.append(shuffle)
+            write = nuke.nodes.Write(name='write_{0}'.format(layer),
+                                     inputs=[shuffle])
+            write['file'].setValue('{0}.{1}.exr'.format(
+                read['file'].value().replace('.exr', ''),
+                layer))
+            write['file_type'].setValue(exr_data['file_type'])
+            for attr, value in exr_data.iteritems():
+                write[attr].setValue(value)
+        contact = nuke.nodes.ContactSheet(inputs=shuffle_nodes)
+        contact['width'].setValue(width)
+        contact['height'].setValue(height)
+        sqrt = math.ceil(math.sqrt(len(shuffle_nodes)))
         contact['rows'].setValue(sqrt)
         contact['columns'].setValue(sqrt)
-        c_write = nuke.nodes.Write(name='write_{0}_contact_sheet'.format(layer), inputs=[contact])
-        c_write['channels'].setValue('rgb')
-        c_write['file'].setValue('{0}.ContactSheet.exr'.format(read['file'].value().replace('.exr', '')))
-        c_write['file_type'].setValue('exr')
-        c_write['datatype'].setValue('16 bit half')
-        c_write['compression'].setValue('Zip (1 scanline)')
-        c_write['reading'].setValue(True)
+        contact_write = nuke.nodes.Write(name='write_{0}_contact_sheet'.format(
+            layer),
+            inputs=[contact])
+        contact_write['file'].setValue('{0}.ContactSheet.exr'.format(
+            read['file'].value().replace('.exr', '')))
+        for attr, value in exr_data.iteritems():
+            contact_write[attr].setValue(value)
 
 
 def create():
@@ -56,6 +66,23 @@ def create():
         except ValueError:
             return False
 
+    exr_data = {
+        'channels': 'all',
+        'file_type': 'exr',
+        'datatype': '16 bit half',
+        'compression': 'Zip (1 scanline)',
+        'reading': True
+    }
+    copy_data = {
+        'from0': 'red',
+        'to0': '{0}.red',
+        'from1': 'green',
+        'to1': '{0}.green',
+        'from2': 'blue',
+        'to2': '{0}.blue',
+        'from3': 'none',
+        'to3': 'none'
+    }
     import nuke
     if not nuke.selectedNodes():
         return
@@ -80,31 +107,15 @@ def create():
         if not last_copy:
             copy = nuke.nodes.Copy(name='copy_{0}'.format(pass_name),
                                    inputs=[rgba, pass_read])
-            copy['from0'].setValue('red')
-            copy['to0'].setValue('{0}.red'.format(pass_name))
-            copy['from1'].setValue('green')
-            copy['to1'].setValue('{0}.green'.format(pass_name))
-            copy['from2'].setValue('blue')
-            copy['to2'].setValue('{0}.blue'.format(pass_name))
-            copy['from3'].setValue('none')
-            copy['to3'].setValue('none')
             last_copy = copy
         else:
             copy = nuke.nodes.Copy(name='copy_{0}'.format(pass_name),
                                    inputs=[last_copy, pass_read])
-            copy['from0'].setValue('red')
-            copy['to0'].setValue('{0}.red'.format(pass_name))
-            copy['from1'].setValue('green')
-            copy['to1'].setValue('{0}.green'.format(pass_name))
-            copy['from2'].setValue('blue')
-            copy['to2'].setValue('{0}.blue'.format(pass_name))
-            copy['from3'].setValue('none')
-            copy['to3'].setValue('none')
             last_copy = copy
+        for attr, value in copy_data.iteritems():
+            copy[attr].setValue(value.format(pass_name))
     write = nuke.nodes.Write(name='multichannel_write', inputs=[last_copy])
-    write['channels'].setValue('all')
-    write['file_type'].setValue('exr')
-    write['datatype'].setValue('16 bit half')
-    write['compression'].setValue('Zip (1 scanline)')
     write['file'].setValue(rgba['file'].value().replace('.exr',
                                                         '_multichannel.exr'))
+    for attr, value in exr_data.iteritems():
+            write[attr].setValue(value)
