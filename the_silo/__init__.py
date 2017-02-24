@@ -35,13 +35,15 @@ def build_silo():
     with open('{0}/silo_data.json'.format(silo_location), 'r') as fp:
         silo_data = json.load(fp)
 
-    for gizmo_name, gizmo in silo_data['gizmos']:
+    for gizmo_name, gizmo in sorted(silo_data['gizmos'],
+                                    key=lambda x: x[0]):
         silo_menu.addCommand('Gizmos/{0}'.format(gizmo_name),
                              'from the_silo import wrapper;'
                              'wrapper.create_gizmo(\'{0}\')'.
                              format(gizmo))
 
-    for script_name, module, func in silo_data['scripts']:
+    for script_name, module, func in sorted(silo_data['scripts'],
+                                            key=lambda x: x[0]):
         silo_menu.addCommand('Scripts/{0}'.format(script_name),
                              'from the_silo import wrapper;'
                              'wrapper.exec_script(\'{0}\', \'{1}\')'.
