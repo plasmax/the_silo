@@ -4,7 +4,7 @@
     ],
     "scripts": [
         ["Reload all Read nodes", "reload", "all_reads"],
-        ["Shuffle Multichannel EXR", "multichannel", "shuffle"],
-        ["Create Multichannel EXR", "multichannel", "create"]
+        ["Multichannel EXR - Shuffle", "multichannel", "shuffle"],
+        ["Multichannel EXR - Create", "multichannel", "create"]
     ]
 }
