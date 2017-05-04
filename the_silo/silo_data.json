@@ -5,6 +5,7 @@
     "scripts": [
         ["Reload all Read nodes", "reload", "all_reads"],
         ["Multichannel EXR - Shuffle", "multichannel", "shuffle"],
-        ["Multichannel EXR - Create", "multichannel", "create"]
+        ["Multichannel EXR - Create", "multichannel", "create"],
+        ["Nuke Mini Asset Broswer", "minibrowser", "load_browserwidget"]
     ]
 }
